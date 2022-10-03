@@ -1,0 +1,102 @@
+//part1
+
+//q1
+select s.class_id , from_where from program as p student as s where s. from_where = ‘TORONTO’
+And s.group_name = p.group_name
+
+
+//q2
+select s.student_id , st.instructor from student as s , program as p , schedule as st
+where s.group_name = p.group_name and p.class_id = st.class_id and st.instructor = 'Ms.Jones'
+
+//q3
+select s.student_name , st.date_time from student as s , program as p , schedule as st
+where s.group_name = p.group_name and p.class_id = st.class_id and St.date_time = 'mon_2'
+
+
+//q4
+select s.student_name , st.room_id from student as s , program as p , schedule as st
+where s.group_name = p.group_name and p.class_id = st.class_id and st.room_id = '11'
+
+//q5
+select st.room_id , p.program_name from program as p , schedule as st
+where p.class_id = st.class_id and st.room_id = '12'
+
+//q6
+select st.room_id , st.class_id, st.date_time, st.instructor,  p.program_name , p.group_name from program as p , schedule as st
+where p.class_id = st.class_id
+
+//q7
+select s.student_id,s.STUDENT_NAME, s.program_name , s.group_name, p.class_id from program as p left join student as s on s.group_name = p.group_name
+
+//q8
+select s.student_name , s.student_id , st.room_id , st.date_time , st.class_id , p.group_name from student as s , program as p , schedule as st
+where s.group_name = p.group_name and p.class_id = st.class_id and p.group_name = 'G2'
+
+//q9
+select s.student_name , s.student_id , st.room_id , st.date_time , st.class_id from student as s , program as p , schedule as st
+where s.group_name = p.group_name and p.class_id = st.class_id and p.program_name = 'ISBA1'
+
+
+--------PART-2
+--part a
+insert into student (student_id, student_name, program_name, group_name, from_where) values(130, 'sally', 'bus-1', 'g1', 'montreal')
+insert into program(program_id, program_name,  group_name, class_id) values(16, 'bus-1', 'g1', 'bu1113-g1')
+insert into schedule (schedule_id, class_id, room_id, instructor, datetime) values (16, 'bu1113-g1', '11', 'mr.smith', 'mon_1')
+
+ --part b
+
+insert into student(student_id, student_name, program_name, group_name, from_where) values(126, 'peanut', 'cet-II', 'g1', 'winipegg')
+insert into program(program_id, program_name,  group_name, class_id) values(17, 'cet-II', 'g1', 'in2003-g1')
+insert into schedule (schedule_id, class_id, room_id, instructor, datetime) values (17, 'in2003-g1', '11', 'ms.chen', 'fri_1')
+
+--part-c
+insert into student (student_id, student_name, program_name, group_name, from_where) values(131, 'vanny', 'bigdata', 'g1', 'london')
+insert into program(program_id, program_name,  group_name, class_id) values(18, 'bigdata', 'g1', 'in3437')
+insert into schedule (schedule_id, class_id, room_id, instructor, datetime) values (18, 'in3437', '11', 'mr.gates', 'sat_1')
+
+
+
+//part3
+
+create table customers(
+customer_id varchar(50),
+customer_name varchar(50),
+customer_phone varchar(50),
+bike_id varchar(50),
+PRIMARY KEY (customer_name),
+)
+
+create table bicycles(
+bike_id varchar(50),
+bike_price money,
+
+PRIMARY KEY (bike_id),
+)
+
+create table repair_data(
+repair_id varchar(50),
+bike_id varchar(50),
+repair_cost money,
+repair_date_in varchar(50),
+customer_id varchar(50),
+PRIMARY KEY (repair_id),
+)
+insert into customers  values ('1','curly', '4160987456', 'bike_101')
+insert into customers  values ('2','larry', '4164717456', 'bike_217')
+insert into customers  values ('3', 'moe', '4160237456', 'bike_194')
+
+insert into bicycles values('bike_101', '500')
+insert into bicycles values('bike_217', '500')
+insert into bicycles values('bike_194', '500')
+
+insert into repair_data values('107', 'bike_101', '34', '4/7/2017', '1')
+insert into repair_data values('219', 'bike_217', '32', '5/1/2018', '2')
+insert into repair_data values('234', 'bike_194', '21', '7/2/2018', '3')
+
+select customers.customer_name, bicycles.bike_id, repair_data.repair_id, repair_data.repair_cost, repair_data.repair_date_in
+from (repair_data
+left join customers 
+on customers.customer_id = repair_data.customer_id)
+left join bicycles 
+on bicycles.bike_id = repair_data.bike_id ; 
